@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/maplibre-gl@4.1.3/dist/maplibre-gl.css"
+    />
+    <script src="https://unpkg.com/maplibre-gl@4.1.3/dist/maplibre-gl.js"></script>
+
+    <!-- FEATURE LAYER > 2000 FEATURES -->
+    <script src="https://unpkg.com/@esri/arcgis-rest-request"></script>
+    <script src="https://unpkg.com/@esri/arcgis-rest-feature-service"></script>
+    <style>
+      #map {
+        height: 100vh;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      #whereClauseSelect {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 1;
+        padding: 8px;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <select id="whereClauseSelect">
+      <option
+        value="STUTERATIO > 15 AND SCHOOL_LEVEL = 'High' AND STABR = 'SC'"
+        selected
+      >
+        SC High Schools with STUTERATIO > 15
+      </option>
+      <Soption
+        value="STUTERATIO > 20 AND SCHOOL_LEVEL = 'Middle' AND STABR = 'SC'"
+      >
+        SC Middle Schools with STUTERATIO > 20
+      </Soption>
+    </select>
+    <script type="module">
+      import { CONFIG } from './config.js'
+
+      const map = new maplibregl.Map({
+        container: 'map',
+        style: `https://api.maptiler.com/maps/bright-v2/style.json?key=GS0QhRKQZX0yD34eSKqU`,
+        center: [-82.4047, 34.8757],
+        zoom: 8
+      })
+
+      //CUSTOM VECTOR BASEMAP LAYER
+      //https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/items/6976148c11bd497d8624206f9ee03e30?token=${CONFIG.key}
+
+      //LOAD FEATURE LAYER
+      //   map.once('load', () => {
+      //     map.addSource('schools', {
+      //       type: 'geojson',
+      //       data: 'https://services1.arcgis.com/Ua5sjt3LWTPigjyD/arcgis/rest/services/School_Characteristics_Current/FeatureServer/3/query?f=pgeojson&where=1=1'
+      //     })
+
+      //     map.addLayer({
+      //       id: 'schools-circle',
+      //       type: 'circle',
+      //       source: 'schools'
+      //     })
+      //   })
+
+      //LOAD FEATURE LAYER > 2000 FEATURES
+      //   const featureLayerUrl =
+      //     'https://services1.arcgis.com/Ua5sjt3LWTPigjyD/arcgis/rest/services/School_Characteristics_Current/FeatureServer/3'
+      //   function loadAllFeatures(
+      //     offset = 0,
+      //     data = { type: 'FeatureCollection', features: [] }
+      //   ) {
+      //     arcgisRest
+      //       .queryFeatures({
+      //         url: featureLayerUrl,
+      //         where: '1=1',
+      //         resultOffset: offset,
+      //         resultRecordCount: 2000,
+      //         outFields: ['*'],
+      //         f: 'geojson',
+      //         returnGeometry: true
+      //       })
+      //       .then(response => {
+      //         data.features = data.features.concat(response.features)
+      //         if (response.features.length === 2000) {
+      //           loadAllFeatures(offset + 2000, data)
+      //         } else {
+      //           addFeaturesToMap(data)
+      //         }
+      //       })
+      //   }
+      //   function addFeaturesToMap(data) {
+      //     if (map.getSource('all-schools')) {
+      //       map.getSource('all-schools').setData(data)
+      //     } else {
+      //       map.addSource('all-schools', { type: 'geojson', data })
+      //       map.addLayer({
+      //         id: 'school-points',
+      //         type: 'circle',
+      //         source: 'all-schools'
+      //       })
+      //     }
+      //   }
+      //   map.on('load', () => loadAllFeatures())
+
+      // QUERYING A FEATURE LAYER
+      // const featureLayerUrl =
+      //   'https://services3.arcgis.com/GVgbJbqm8hXASVYi/ArcGIS/rest/services/usa_public_school_characteristics_2020211/FeatureServer/0'
+
+      // function executeQuery(
+      //   whereClause,
+      //   geometry,
+      //   resultOffset = 0,
+      //   data = { type: 'FeatureCollection', features: [] }
+      // ) {
+      //   arcgisRest
+      //     .queryFeatures({
+      //       url: featureLayerUrl,
+      //       where: whereClause,
+      //       geometry: geometry,
+      //       geometryType: 'esriGeometryEnvelope',
+      //       inSR: 4326,
+      //       resultOffset: resultOffset,
+      //       resultRecordCount: 2000,
+      //       f: 'geojson',
+      //       returnGeometry: true
+      //     })
+      //     .then(response => {
+      //       data.features = data.features.concat(response.features)
+      //       if (response.features.length === 2000) {
+      //         executeQuery(whereClause, geometry, resultOffset + 2000, data)
+      //       } else {
+      //         if (map.getSource('schools')) {
+      //           map.getSource('schools').setData(data)
+      //         } else {
+      //           map.addSource('schools', {
+      //             type: 'geojson',
+      //             data: data
+      //           })
+
+      //           map.addLayer({
+      //             id: 'school-points',
+      //             type: 'circle',
+      //             source: 'schools'
+      //           })
+
+      //           map.on('click', 'school-points', function (e) {
+      //             const coordinates = e.features[0].geometry.coordinates.slice()
+      //             const description = `
+      //                           <strong>School Name:</strong> ${e.features[0].properties.SCH_NAME}<br>
+      //                           <strong>Student to Teacher Ratio:</strong> ${e.features[0].properties.STUTERATIO}<br>
+      //                           <strong>School Level:</strong> ${e.features[0].properties.SCHOOL_LEVEL}
+      //                       `
+      //             new maplibregl.Popup()
+      //               .setLngLat(coordinates)
+      //               .setHTML(description)
+      //               .addTo(map)
+      //           })
+      //         }
+      //       }
+      //     })
+      // }
+
+      // const select = document.getElementById('whereClauseSelect')
+      // select.addEventListener('change', () => {
+      //   const whereClause = select.value
+      //   const bounds = map.getBounds().toArray().flat()
+      //   const extent4326 = [bounds[0], bounds[1], bounds[2], bounds[3]]
+
+      //   executeQuery(whereClause, extent4326)
+      // })
+
+      // executeQuery(
+      //   "STUTERATIO > 15 AND SCHOOL_LEVEL = 'High' AND STABR = 'SC'",
+      //   map.getBounds().toArray().flat()
+      // )
+    </script>
+  </body>
+</html>
