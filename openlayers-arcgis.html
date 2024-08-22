@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenLayers with ArcGIS Demo</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/ol@v8.2.0/ol.css"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/ol@v8.2.0/dist/ol.js"></script>
+    <!-- Needed for OL Popups -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/ol-popup@5.1.0/src/ol-popup.css"
+    />
+    <script src="https://unpkg.com/ol-popup@5.1.0/dist/ol-popup.js"></script>
+    <!-- Needed for ArcGIS GeoEnrichment -->
+    <script src="https://unpkg.com/@esri/arcgis-rest-request@4.0.0/dist/bundled/request.umd.js"></script>
+    <script src="https://unpkg.com/@esri/arcgis-rest-demographics@4.0.0/dist/bundled/demographics.umd.js"></script>
+    <style>
+      #map {
+        height: 100vh;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      .ol-popup {
+        width: 250px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script type="module">
+      import { CONFIG } from './config.js'
+
+      const map = new ol.Map({
+        target: 'map',
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        view: new ol.View({
+          center: ol.proj.fromLonLat([-82.39, 34.85]),
+          zoom: 12
+        })
+      })
+
+      const popup = new Popup()
+      map.addOverlay(popup)
+
+      map.on('click', event => {
+        const lonLat = ol.proj.toLonLat(event.coordinate)
+        arcgisRest.queryDemographicData({
+            studyAreas: [{ geometry: { x: lonLat[0], y: lonLat[1] } }],
+            authentication: arcgisRest.ApiKeyManager.fromKey(CONFIG.key),
+          }).then(res => {
+            const data = res.results[0].value.FeatureSet[0].features[0].attributes
+            const message = `
+              Population: ${data.TOTPOP}<br>
+              Average Household Size: ${data.AVGHHSZ}`
+            popup.show(event.coordinate, message)
+          })
+      })
+
+//       analysisVariables: [
+//   'PetsPetProducts.MP26001H_B',
+//   'maritalstatustotals.MARRIED_CY'
+// ]
+
+// const message = `Pets: ${data.MP26001h_B}<br>Married: ${data.MARRIED_CY}`
+
+    </script>
+  </body>
+</html>
