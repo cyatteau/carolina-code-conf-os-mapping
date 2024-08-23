@@ -22,8 +22,9 @@
   <body>
     <div id="map"></div>
     <script>
-      const map = L.map('map').setView([34.8757, -82.4047], 12);
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+      const map = L.map('map').setView([lat, long], zoom);
+      //L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+      // L.tileLayer('https://tile.opentopomap.org/{z}/{x}/{y}.png').addTo(map);
     </script>
   </body>
 </html>
