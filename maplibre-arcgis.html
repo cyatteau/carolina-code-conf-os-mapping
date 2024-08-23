@@ -32,19 +32,19 @@
   </head>
   <body>
     <div id="map"></div>
-    <select id="whereClauseSelect">
+    <!-- <select id="whereClauseSelect">
       <option
         value="STUTERATIO > 15 AND SCHOOL_LEVEL = 'High' AND STABR = 'SC'"
         selected
       >
-        SC High Schools with STUTERATIO > 15
+        SC High Schools with Student:Teacher Ratio > 15
       </option>
-      <Soption
+      <option
         value="STUTERATIO > 20 AND SCHOOL_LEVEL = 'Middle' AND STABR = 'SC'"
       >
-        SC Middle Schools with STUTERATIO > 20
-      </Soption>
-    </select>
+        SC Middle Schools with Student:Teacher Ratio > 20
+      </option>
+    </select> -->
     <script type="module">
       import { CONFIG } from './config.js'
 
@@ -58,7 +58,7 @@
       //CUSTOM VECTOR BASEMAP LAYER
       //https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/items/6976148c11bd497d8624206f9ee03e30?token=${CONFIG.key}
 
-      //LOAD FEATURE LAYER
+      //LOAD FEATURE LAYER (First 2000 only) - US has over 95,000 schools
       //   map.once('load', () => {
       //     map.addSource('schools', {
       //       type: 'geojson',
@@ -183,6 +183,25 @@
       //   "STUTERATIO > 15 AND SCHOOL_LEVEL = 'High' AND STABR = 'SC'",
       //   map.getBounds().toArray().flat()
       // )
+
+      // VECTOR TILE LAYER
+      // map.on('style.load', () => {
+      //   console.log('Base style loaded')
+
+      //   map.addSource('layer-id', {
+      //     type: 'vector',
+      //     tiles: [
+      //       'https://vectortileservices3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/USA_Public_School_Characteristics/VectorTileServer/tile/{z}/{y}/{x}.pbf'
+      //     ]
+      //   })
+
+      //   map.addLayer({
+      //     id: 'layer-fill',
+      //     type: 'circle',
+      //     source: 'layer-id',
+      //     'source-layer': 'usa_public_school_characteristics_2020211',
+      //   })
+      // })
     </script>
   </body>
 </html>

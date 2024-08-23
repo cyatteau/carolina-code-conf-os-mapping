@@ -50,30 +50,33 @@
         })
       })
 
-      const popup = new Popup()
-      map.addOverlay(popup)
+      //DEMOGRAPHIC DATA
+      // const popup = new Popup()
+      // map.addOverlay(popup)
 
-      map.on('click', event => {
-        const lonLat = ol.proj.toLonLat(event.coordinate)
-        arcgisRest.queryDemographicData({
-            studyAreas: [{ geometry: { x: lonLat[0], y: lonLat[1] } }],
-            authentication: arcgisRest.ApiKeyManager.fromKey(CONFIG.key),
-          }).then(res => {
-            const data = res.results[0].value.FeatureSet[0].features[0].attributes
-            const message = `
-              Population: ${data.TOTPOP}<br>
-              Average Household Size: ${data.AVGHHSZ}`
-            popup.show(event.coordinate, message)
-          })
-      })
+      // map.on('click', event => {
+      //   const lonLat = ol.proj.toLonLat(event.coordinate)
+      //   arcgisRest
+      //     .queryDemographicData({
+      //       studyAreas: [{ geometry: { x: lonLat[0], y: lonLat[1] } }],
+      //       authentication: arcgisRest.ApiKeyManager.fromKey(CONFIG.key)
+      //     })
+      //     .then(res => {
+      //       const data =
+      //         res.results[0].value.FeatureSet[0].features[0].attributes
+      //       const message = `
+      //         Population: ${data.TOTPOP}<br>
+      //         Average Household Size: ${data.AVGHHSZ}`
+      //       popup.show(event.coordinate, message)
+      //     })
+      // })
 
-//       analysisVariables: [
-//   'PetsPetProducts.MP26001H_B',
-//   'maritalstatustotals.MARRIED_CY'
-// ]
+      //       analysisVariables: [
+      //   'PetsPetProducts.MP26001H_B',
+      //   'maritalstatustotals.MARRIED_CY'
+      // ]
 
-// const message = `Pets: ${data.MP26001h_B}<br>Married: ${data.MARRIED_CY}`
-
+      // const message = `HH with Pets: ${data.MP26001h_B}<br>Married Adults: ${data.MARRIED_CY}`
     </script>
   </body>
 </html>
