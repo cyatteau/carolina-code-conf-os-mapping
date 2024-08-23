@@ -22,3 +22,9 @@ This talk covers how to leverage open-source web mapping libraries like Leaflet,
 1. **Clone the repo**:  
    ```bash
    git clone https://github.com/cyatteau/carolina-code-conf-os-mapping.git
+
+## Requirements <a name="req"></a>
+
+- Sign up for an [ArcGIS Location Platform Account](https://location.arcgis.com/sign-up/).
+- Get an ArcGIS API Key and add it to your config.js file.
+
