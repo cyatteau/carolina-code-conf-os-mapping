@@ -11,11 +11,11 @@ This talk covers how to leverage open-source web mapping libraries like Leaflet,
   
 - **Demos**:
   - **[Leaflet Basic Demo](https://github.com/cyatteau/carolina-code-conf-os-mapping/blob/main/leaflet.html)**: A simple example demonstrating the basics of Leaflet.
-  - **[Leaflet + Esri Leaflet Demo](https://github.com/cyatteau/carolina-code-conf-os-mapping/blob/main/esri-leaflet.html)**: Integrating Esri Leaflet with Leaflet for geospatial functionalities.
+  - **[Leaflet + Esri Leaflet Demo](https://github.com/cyatteau/carolina-code-conf-os-mapping/blob/main/esri-leaflet.html)**: Integrating Esri Leaflet with Leaflet for geospatial functionalities. Learn more about [Esri Leaflet](https://developers.arcgis.com/esri-leaflet/).
   - **[MapLibre GL JS Basic Demo](https://github.com/cyatteau/carolina-code-conf-os-mapping/blob/main/maplibre.html)**: Basic usage of MapLibre GL JS for interactive maps.
-  - **[MapLibre GL JS + ArcGIS Demo](https://github.com/cyatteau/carolina-code-conf-os-mapping/blob/main/maplibre-arcgis.html)**: Combining MapLibre GL JS with ArcGIS for advanced mapping.
+  - **[MapLibre GL JS + ArcGIS Demo](https://github.com/cyatteau/carolina-code-conf-os-mapping/blob/main/maplibre-arcgis.html)**: Combining MapLibre GL JS with ArcGIS for advanced mapping. Learn more about [MapLibre GL JS + ArcGIS](https://developers.arcgis.com/maplibre-gl-js/).
   - **[OpenLayers Basic Demo](https://github.com/cyatteau/carolina-code-conf-os-mapping/blob/main/openlayers.html)**: An introductory example of using OpenLayers.
-  - **[OpenLayers + ArcGIS Demo](https://github.com/cyatteau/carolina-code-conf-os-mapping/blob/main/openlayers-arcgis.html)**: Demonstrating the integration of OpenLayers with ArcGIS.
+  - **[OpenLayers + ArcGIS Demo](https://github.com/cyatteau/carolina-code-conf-os-mapping/blob/main/openlayers-arcgis.html)**: Demonstrating the integration of OpenLayers with ArcGIS. Learn more about [OpenLayers + ArcGIS](https://developers.arcgis.com/openlayers/).
 
 ## How to Use
 
