@@ -1,4 +1,4 @@
-# A Developer's Guide to Open Source Web Mapping Libraries
+# Carolina Code Conference 2024 - A Developer's Guide to Open Source Web Mapping Libraries
 
 This repository contains the materials for my talk at the 2024 Carolina Code Conference, titled "A Developer's Guide to Open Source Web Mapping Libraries."
 
